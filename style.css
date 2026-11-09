@@ -34,52 +34,56 @@ body {
 }
 
 .lock-card {
-    background: rgba(15, 23, 42, 0.8);
-    border: 1px solid rgba(212, 175, 55, 0.3);
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(212, 175, 55, 0.35);
     backdrop-filter: blur(15px);
     padding: 30px;
     border-radius: 20px;
     text-align: center;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7), 0 0 20px rgba(212, 175, 55, 0.15);
     width: 320px;
 }
 
 .lock-card h2 {
     color: #d4af37;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     font-size: 1.5rem;
 }
 
 .lock-card p {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: #94a3b8;
     margin-bottom: 20px;
 }
 
 .pin-display {
     font-size: 2rem;
-    letter-spacing: 8px;
+    letter-spacing: 10px;
     color: #d4af37;
-    background: rgba(0, 0, 0, 0.3);
-    padding: 10px;
-    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 12px;
+    border-radius: 12px;
     margin-bottom: 20px;
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    min-height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .keypad {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    gap: 12px;
 }
 
 .keypad button {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(212, 175, 55, 0.2);
     color: #f8fafc;
-    font-size: 1.2rem;
-    padding: 15px 0;
-    border-radius: 10px;
+    font-size: 1.3rem;
+    padding: 14px 0;
+    border-radius: 12px;
     cursor: pointer;
     transition: all 0.2s ease;
 }
@@ -87,15 +91,17 @@ body {
 .keypad button:hover {
     background: #d4af37;
     color: #020617;
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.4);
 }
 
 .error-msg {
     color: #ef4444;
     font-size: 0.85rem;
     margin-top: 15px;
-    height: 15px;
+    min-height: 18px;
 }
 
+/* Noto'g'ri kod kiritilgandagi titrash animatsiyasi */
 .shake {
     animation: shake 0.4s ease-in-out;
 }
@@ -106,7 +112,7 @@ body {
     40%, 80% { transform: translateX(10px); }
 }
 
-/* --- ASOSIY SAHIFA VA FON --- */
+/* --- ASOSIY SAHIFA VA HARAKATLANUVCHI FON --- */
 .bg-text-container {
     position: absolute;
     width: 100%;
@@ -121,7 +127,7 @@ body {
 
 .bg-row {
     white-space: nowrap;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     color: #cbd5e1;
     font-weight: 300;
     animation: scroll 30s linear infinite;
@@ -136,6 +142,7 @@ body {
     100% { transform: translateX(-50%); }
 }
 
+/* --- ASOSIY MATN KARTASI --- */
 .main-card {
     position: relative;
     z-index: 10;
@@ -151,6 +158,7 @@ body {
     opacity: 0;
     transform: scale(0.95);
     transition: opacity 0.8s ease, transform 0.8s ease;
+    cursor: pointer;
 }
 
 .main-card.visible {
@@ -163,7 +171,7 @@ body {
     color: #d4af37;
     text-transform: uppercase;
     letter-spacing: 3px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     font-weight: 600;
 }
 
@@ -175,16 +183,17 @@ body {
     align-items: center;
     justify-content: center;
     color: #f1f5f9;
-    transition: opacity 0.4s ease, transform 0.4s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .statement span {
     color: #d4af37;
     font-weight: bold;
     text-shadow: 0 0 12px rgba(212, 175, 55, 0.4);
+    margin: 0 6px;
 }
 
-/* Pause Badge */
+/* Pause Ko'rsatkichi */
 .pause-indicator {
     position: absolute;
     top: 20px;
@@ -192,12 +201,13 @@ body {
     background: rgba(239, 68, 68, 0.2);
     border: 1px solid #ef4444;
     color: #ef4444;
-    padding: 4px 10px;
+    padding: 4px 12px;
     font-size: 0.75rem;
     border-radius: 6px;
     letter-spacing: 1px;
     opacity: 0;
     transition: opacity 0.3s;
+    font-weight: bold;
 }
 
 .pause-indicator.show {
@@ -216,7 +226,7 @@ body {
 
 .progress-bar {
     height: 100%;
-    width: 1%;
+    width: 0%;
     background: linear-gradient(90deg, #d4af37, #fef08a);
     transition: width 0.3s ease;
 }
