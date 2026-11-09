@@ -1,0 +1,232 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
+    color: #f8fafc;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    user-select: none;
+}
+
+/* --- LOCK SCREEN (PAROL OYNASI) --- */
+.lock-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #020617;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease;
+}
+
+.lock-card {
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    backdrop-filter: blur(15px);
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+    width: 320px;
+}
+
+.lock-card h2 {
+    color: #d4af37;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+.lock-card p {
+    font-size: 0.9rem;
+    color: #94a3b8;
+    margin-bottom: 20px;
+}
+
+.pin-display {
+    font-size: 2rem;
+    letter-spacing: 8px;
+    color: #d4af37;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.keypad button {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    color: #f8fafc;
+    font-size: 1.2rem;
+    padding: 15px 0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.keypad button:hover {
+    background: #d4af37;
+    color: #020617;
+}
+
+.error-msg {
+    color: #ef4444;
+    font-size: 0.85rem;
+    margin-top: 15px;
+    height: 15px;
+}
+
+.shake {
+    animation: shake 0.4s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-10px); }
+    40%, 80% { transform: translateX(10px); }
+}
+
+/* --- ASOSIY SAHIFA VA FON --- */
+.bg-text-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    opacity: 0.06;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.bg-row {
+    white-space: nowrap;
+    font-size: 1.5rem;
+    color: #cbd5e1;
+    font-weight: 300;
+    animation: scroll 30s linear infinite;
+}
+
+.bg-row:nth-child(even) {
+    animation-direction: reverse;
+}
+
+@keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.main-card {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 50px 40px;
+    max-width: 750px;
+    width: 90%;
+    background: rgba(15, 23, 42, 0.65);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    backdrop-filter: blur(12px);
+    border-radius: 24px;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6), 0 0 25px rgba(212, 175, 55, 0.1);
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.main-card.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.number-badge {
+    font-size: 1.1rem;
+    color: #d4af37;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.statement {
+    font-size: 2.1rem;
+    line-height: 1.5;
+    min-height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #f1f5f9;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.statement span {
+    color: #d4af37;
+    font-weight: bold;
+    text-shadow: 0 0 12px rgba(212, 175, 55, 0.4);
+}
+
+/* Pause Badge */
+.pause-indicator {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    background: rgba(239, 68, 68, 0.2);
+    border: 1px solid #ef4444;
+    color: #ef4444;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    border-radius: 6px;
+    letter-spacing: 1px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.pause-indicator.show {
+    opacity: 1;
+}
+
+/* Progress Bar */
+.progress-bar-container {
+    width: 100%;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    margin-top: 35px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 1%;
+    background: linear-gradient(90deg, #d4af37, #fef08a);
+    transition: width 0.3s ease;
+}
+
+.fade-out {
+    opacity: 0;
+    transform: scale(0.96);
+}
+
+.fade-in {
+    opacity: 1;
+    transform: scale(1);
+}
