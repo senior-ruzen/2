@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siz Haqizda 100 Ta Go'zal Narsa</title>
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            900: '#060B19',
+                            800: '#0A1128',
+                            700: '#101B3B'
+                        },
+                        gold: {
+                            300: '#FDE047',
+                            400: '#FACC15',
+                            500: '#EAB308',
+                            600: '#CA8A04'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'Georgia', 'serif'],
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts for cinematic typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #060b19;
+            color: #f8fafc;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .gold-glow-text {
+            color: #facc15;
+            text-shadow: 0 0 15px rgba(250, 204, 21, 0.4), 0 0 30px rgba(250, 204, 21, 0.2);
+        }
+
+        .gold-border-glow {
+            box-shadow: 0 0 30px rgba(234, 179, 8, 0.15), inset 0 0 15px rgba(234, 179, 8, 0.05);
+        }
+
+        /* Continuous Scrolling Background Text */
+        .bg-scroll-row {
+            white-space: nowrap;
+            will-change: transform;
+            animation: bgScroll 35s linear infinite;
+        }
+        .bg-scroll-row-reverse {
+            white-space: nowrap;
+            will-change: transform;
+            animation: bgScrollReverse 40s linear infinite;
+        }
+
+        @keyframes bgScroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        @keyframes bgScrollReverse {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+        }
+
+        /* Subtle Light Sweep Effects */
+        .light-sweep {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(250, 204, 21, 0.04) 0%, transparent 60%);
+            animation: sweep 12s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+
+        @keyframes sweep {
+            0% { transform: translate(-10%, -10%) scale(0.9); }
+            100% { transform: translate(10%, 10%) scale(1.1); }
+        }
+
+        /* Text Scale & Fade Transitions */
+        .statement-enter {
+            opacity: 0;
+            transform: scale(0.94) translateY(12px);
+            filter: blur(4px);
+        }
+        .statement-active {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            filter: blur(0);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .statement-exit {
+            opacity: 0;
+            transform: scale(1.04) translateY(-12px);
+            filter: blur(4px);
+            transition: all 0.4s cubic-bezier(0.7, 0, 0.84, 0);
+        }
+
+        /* Keypad Shake for Incorrect PIN */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+        .shake-err {
+            animation: shake 0.4s ease-in-out;
+        }
+    </style>
+</head>
+<body class="h-screen w-screen overflow-hidden bg-navy-900 relative">
+
+    <!-- Ambient Lighting Sweep Background -->
+    <div class="light-sweep"></div>
+    <canvas id="particleCanvas" class="absolute inset-0 pointer-events-none z-0 opacity-60"></canvas>
+
+    <!-- Moving Background Typography Rows (Visible in main stage) -->
+    <div id="bgTypography" class="absolute inset-0 z-0 flex flex-col justify-between py-8 opacity-5 pointer-events-none select-none overflow-hidden hidden">
+        <div class="bg-scroll-row text-3xl font-serif tracking-widest text-gold-400">
+            SAMIMIYLIK • MEHRIBONLIK • NURI DARYO • QALBI POK • BEHI SOB • YUKSAK MAQSAD • TARAQQIYOT • ILHOM MANBAI •
+            SAMIMIYLIK • MEHRIBONLIK • NURI DARYO • QALBI POK • BEHI SOB • YUKSAK MAQSAD • TARAQQIYOT • ILHOM MANBAI •
+        </div>
+        <div class="bg-scroll-row-reverse text-4xl font-serif italic tracking-wider text-slate-300">
+            Siz dunyoni yanada go'zal qilasiz • Qalbingizda quyosh bor • O'zingizga bo'lgan ishonch suvsiz gulga suv kabidir •
+            Siz dunyoni yanada go'zal qilasiz • Qalbingizda quyosh bor • O'zingizga bo'lgan ishonch suvsiz gulga suv kabidir •
+        </div>
+        <div class="bg-scroll-row text-3xl font-sans uppercase tracking-widest text-gold-300">
+            Noyob Fikrlar • Yorqin Kelajak • Haqiqiy Do'stlik • Sabr va Matonat • Samimiy Tabassum •
+            Noyob Fikrlar • Yorqin Kelajak • Haqiqiy Do'stlik • Sabr va Matonat • Samimiy Tabassum •
+        </div>
+        <div class="bg-scroll-row-reverse text-4xl font-serif tracking-widest text-slate-400">
+            Har bir qadamingizda zafar yor bo'lsin • Qadringiz baland va beg'ubor • Cheksiz hurmat ila •
+            Har bir qadamingizda zafar yor bo'lsin • Qadringiz baland va beg'ubor • Cheksiz hurmat ila •
+        </div>
+    </div>
+
+    <!-- 1. PAROL KIRITISH EKRANI (DARK GLASSMORPHISM PIN SCREEN) -->
+    <div id="lockScreen" class="absolute inset-0 z-50 flex items-center justify-center p-4 bg-navy-900/95 backdrop-blur-xl">
+        <div id="pinBox" class="w-full max-w-md p-8 sm:p-10 rounded-3xl bg-navy-800/80 border border-gold-500/20 gold-border-glow text-center backdrop-blur-md transition-all">
+            <!-- Lock Icon -->
+            <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-gold-500/10 border border-gold-500/30 flex items-center justify-center">
+                <svg class="w-8 h-8 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                </svg>
+            </div>
+
+            <h2 class="text-2xl sm:text-3xl font-serif text-white mb-2 tracking-wide">Xush kelibsiz</h2>
+            <p class="text-slate-400 text-xs sm:text-sm mb-8">Davom etish uchun maxsus parolni kiriting</p>
+
+            <!-- PIN Dots Display -->
+            <div id="pinDots" class="flex justify-center items-center gap-4 mb-8">
+                <div class="w-4 h-4 rounded-full border border-gold-500/40 bg-navy-900 transition-all duration-200"></div>
+                <div class="w-4 h-4 rounded-full border border-gold-500/40 bg-navy-900 transition-all duration-200"></div>
+                <div class="w-4 h-4 rounded-full border border-gold-500/40 bg-navy-900 transition-all duration-200"></div>
+                <div class="w-4 h-4 rounded-full border border-gold-500/40 bg-navy-900 transition-all duration-200"></div>
+            </div>
+
+            <!-- PIN Numpad Grid -->
+            <div class="grid grid-cols-3 gap-3 max-w-xs mx-auto">
+                <button onclick="appendPin('1')" class="h-14 rounded-2xl bg-navy-700/50 hover:bg-gold-500/20 border border-slate-800 hover:border-gold-500/40 text-xl font-medium text-slate-200 active:scale-95 transition-all">1</button>
+                <button onclick="appendPin('2')" class="h-14 rounded-2xl bg-navy-700/50 hover:bg-gold-500/20 border border-slate-800 hover:border-gold-500/40 text-xl font-medium text-slate-200 active:scale-95 transition-all">2</button>
+                <button onclick="appendPin('3')" class="h-14 rounded-2xl bg-navy-700/50 hover:bg-gold-500/20 border border-slate-800 hover:border-gold-500/40 text-xl font-medium text-slate-200 active:scale-95 transition-all">3</button>
+                <button onclick="appendPin('4')" class="h-14 rounded-2xl bg-navy-700/50 hover:bg-gold-500/20 border border-slate-800 hover:border-gold-500/40 text-xl font-medium text-slate-200 active:scale-95 transition-all">4</button>
+                <button onclick="appendPin('5')" class="h-14 rounded-2xl bg-navy-700/50 hover:bg-gold-500/20 border border-slate-800 hover:border-gold-500/40 text-xl font-medium text-slate-200 active:scale-95 transition-all">5</button>
+                <button onclick="appendPin('6')" class="h-14 rounded-2xl bg-navy-700/50 hover:bg-gold-500/20 border border-slate-800 hover:border-gold-500/40 text-xl font-medium text-slate-200 active:scale-95 transition-all">6</button>
+                <button onclick="appendPin('7')" class="h-14 rounded-2xl bg-navy-700/50 hover:bg-gold-500/20 border border-slate-800 hover:border-gold-500/40 text-xl font-medium text-slate-200 active:scale-95 transition-all">7</button>
+                <button onclick="appendPin('8')" class="h-14 rounded-2xl bg-navy-700/50 hover:bg-gold-500/20 border border-slate-800 hover:border-gold-500/40 text-xl font-medium text-slate-200 active:scale-95 transition-all">8</button>
+                <button onclick="appendPin('9')" class="h-14 rounded-2xl bg-navy-700/50 hover:bg-gold-500/20 border border-slate-800 hover:border-gold-500/40 text-xl font-medium text-slate-200 active:scale-95 transition-all">9</button>
+                <button onclick="clearPin()" class="h-14 rounded-2xl bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 text-xs font-semibold tracking-wider text-red-400 active:scale-95 transition-all">OCHIRISH</button>
+                <button onclick="appendPin('0')" class="h-14 rounded-2xl bg-navy-700/50 hover:bg-gold-500/20 border border-slate-800 hover:border-gold-500/40 text-xl font-medium text-slate-200 active:scale-95 transition-all">0</button>
+                <button onclick="backspacePin()" class="h-14 rounded-2xl bg-navy-700/50 hover:bg-gold-500/20 border border-slate-800 hover:border-gold-500/40 text-slate-400 active:scale-95 transition-all flex items-center justify-center">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2H10.828a2 2 0 00-1.414.586L3 12z"/></svg>
+                </button>
+            </div>
+
+            <p id="errorMsg" class="mt-4 text-xs text-red-400 opacity-0 transition-opacity">Parol noto'g'ri!</p>
+        </div>
+    </div>
+
+    <!-- 2. ASOSIY ANIMATSIYA SAHNA (MAIN STAGE) -->
+    <main id="mainStage" class="relative z-10 h-full w-full flex flex-col justify-between items-center p-6 sm:p-12 opacity-0 transition-opacity duration-1000 hidden">
+        
+        <!-- Header: Minimal Title & Counter -->
+        <header class="w-full max-w-4xl flex justify-between items-center text-xs tracking-widest text-slate-400 uppercase">
+            <span class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-gold-400 animate-pulse"></span>
+                Siz Haqizda
+            </span>
+            <span id="counter" class="font-mono text-gold-400 font-medium">001 / 100</span>
+        </header>
+
+        <!-- Center Card Container (Click / Double Click Gesture Stage) -->
+        <div id="gestureZone" class="w-full max-w-3xl my-auto py-12 px-6 sm:px-12 rounded-3xl bg-navy-800/40 border border-gold-500/10 backdrop-blur-md gold-border-glow cursor-pointer relative group">
+            
+            <!-- Pause Indicator Visual Badge -->
+            <div id="pauseBadge" class="absolute top-4 right-4 px-3 py-1 rounded-full bg-gold-500/10 border border-gold-500/30 text-gold-400 text-xs tracking-wider uppercase opacity-0 transition-opacity duration-300 pointer-events-none flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-gold-400"></span>
+                Pauza
+            </div>
+
+            <!-- Statement Display -->
+            <div id="statementText" class="statement-enter text-2xl sm:text-3xl md:text-4xl font-serif text-slate-100 leading-relaxed text-center">
+                <!-- Text populated dynamically -->
+            </div>
+            
+            <!-- Gesture hint on hover -->
+            <div class="mt-8 text-center opacity-0 group-hover:opacity-40 transition-opacity text-[10px] tracking-widest uppercase text-slate-400 pointer-events-none">
+                1 marta bosing: Pauza / Davom etish  •  2 marta bosing: Keyingisi
+            </div>
+        </div>
+
+        <!-- Footer: Progress Bar & Minimal Clean Controls -->
+        <footer class="w-full max-w-4xl flex flex-col gap-3">
+            <div class="w-full h-1 bg-navy-700/60 rounded-full overflow-hidden">
+                <div id="progressBar" class="h-full w-0 bg-gradient-to-r from-gold-600 via-gold-400 to-gold-300 transition-all duration-300"></div>
+            </div>
+            <div class="flex justify-between items-center text-[11px] text-slate-500 font-mono tracking-wider">
+                <span>AVTOMATIK KINEMATIK PLAY</span>
+                <span>PIN: 2104</span>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        // 100 O'zbekcha Ilhomlantiruvchi Tilaklar / Fikrlar
+        const statements = [
+            "Sizning <span>tabassum</span> atrofdagilar kunini yoritib yuboradi.",
+            "Siz har bir vaziyatda <span>samimiyat</span> saqlay oladigan kamyob insonsiz.",
+            "Siz bilan suhbatlashish odamga <span>ruhiy halovat</span> bag'ishlaydi.",
+            "Sizda hech kimga o'xshamaydigan <span>noyob shaxsiyat</span> bor.",
+            "Siz atrofdagilar uchun haqiqiy <span>ilhom manbai</span>siz.",
+            "Sizning <span>mehribonligingiz</span> chek-chegarasizdir.",
+            "Siz o'z so'zingizda va va'dangizda <span>sadoqat bilan</span> turasiz.",
+            "Sizning <span>hazil tuyg'ungiz</span> eng og'ir kunni ham yoritadi.",
+            "Siz boshqalarni astoydil <span>tinglashni va tushunishni</span> bilasiz.",
+            "Sizning <span>ko'zlaringizda</span> samimiy va toza nur bor.",
+            "Siz har bir ishga <span>sidqidildan</span> yondashadigan mehnatkashsiz.",
+            "Sizning <span>sabringiz</span> va matonatingiz tahsinga loyiq.",
+            "Sizning <span>dilingiz va tilingiz</span> har doim bir xil pokiza.",
+            "Siz o'z maqsadlaringiz sari <span>dadil intilasiz</span>.",
+            "Siz bilan birga o'tgan har bir daqiqa <span>qadrli</span>.",
+            "Siz atrofdagilarga <span>ishonch va kuch</span> bag'ishlaysiz.",
+            "Sizning hayotga bo'lgan <span>didli va nafis</span> qarashingiz bor.",
+            "Siz odamlarning faqat <span>yaxshi tomonlarini</span> ko'ra olasiz.",
+            "Siz har bir mas'uliyatni <span>a'lo darajada</span> bajarasiz.",
+            "Sizning <span>ovozingizda</span> tinchlantiruvchi sehr bor.",
+            "Siz juda <span>ijodkor</span> va keng fikrlaydigan insonsiz.",
+            "Siz qiyin damda har doim <span>yordamga tayyor</span>siz.",
+            "Sizning <span>yuragingiz</span> barchaga joy yetadigan darajada keng.",
+            "Siz do'stlik masalasida <span>sadoqatli va sodiq</span>siz.",
+            "Siz bilan har qanday suhbat <span>maroqli va mazmunli</span> kechadi.",
+            "Siz ushbu dunyoning eng <span>nodir durdonasi</span>siz.",
+            "Siz har bir kichik narsada ham <span>go'zallik</span> ko'rasiz.",
+            "Sizning ichingizda <span>tuganmas g'ayrat</span> yashaydi.",
+            "Siz boshqalarga tushkunlikda <span>umid baxsh etasiz</span>.",
+            "Siz xatolardan o'z vaqtida <span>to'g'ri xulosa</span> chiqarasiz.",
+            "Siz har kuni o'zingizni <span>rivojlantirishga</span> intilasiz.",
+            "Sizning <span>insoniy qadriyatlaringiz</span> juda baland.",
+            "Siz o'z yaqinlaringizni <span>jondan ortiq</span> qadrlaysiz.",
+            "Sizning <span>zakovatingiz va aql-idrokingiz</span> yuksak.",
+            "Siz kutilmagan <span>yoqimli onlar</span> ulasha olasiz.",
+            "Siz bor joyda har doim <span>xotirjamlik va fayz</span> bo'ladi.",
+            "Siz o'ta <span>odob-axloqli</span> va muloyim insonsiz.",
+            "Sizning <span>irodangiz</span> ko'pchilik uchun namuna.",
+            "Siz o'zingizga yuklatilgan vazifani <span>mukammal</span> qilasiz.",
+            "Siz <span>jasoratli</span> va qarorlarida qat'iyatlisiz.",
+            "Siz har bir inson kalobini <span>tushunishga</span> harakat qilasiz.",
+            "Sizning <span>samimiy va tabiiyligingiz</span> barchani jalb qiladi.",
+            "Siz Katta va go'zal <span>orzular qilishdan</span> qo'rqmaysiz.",
+            "Sizning <span>dunyoqarashingiz</span> teran va keng.",
+            "Siz atrofdagilarni bir maqsadda <span>birlashtira olasiz</span>.",
+            "Siz <span>mehribon va g'amxor</span> do'stsiz.",
+            "Sizning <span>jo'shqinligingiz</span> boshqalarga ham yuqadi.",
+            "Siz eng maxfiy <span>sirlarga sadoqatli</span> saqlovchisiz.",
+            "Siz har doim <span>yangi bilimlarga</span> ochiqsiz.",
+            "Sizning <span>ichki dunyongiz</span> behad boy va go'zal.",
+            "Siz har doim <span>adolat va haqiqat</span> tarafidasiz.",
+            "Siz <span>nozik va yuqori didli</span> insonsiz.",
+            "Siz o'z his-tuyg'ularingizda <span>haqiqiy va soxtasiz</span>siz.",
+            "Siz odamlar qalbida <span>yorqin xotiralar</span> qoldirasiz.",
+            "Siz har bir ishda <span>ozodalik va tartibni</span> xush ko'rasiz.",
+            "Siz boshqalarning yutug'idan <span>chin dildan quvonasiz</span>.",
+            "Sizning <span>qobiliyatlaringiz</span> qamrovi juda keng.",
+            "Siz har bir qadamingizni <span>mulohaza bilan</span> tasiysiz.",
+            "Siz har bir lahzaning <span>qadriga yeta olasiz</span>.",
+            "Siz g'amgin qalblarni <span>tinchlantirishni</span> bilasiz.",
+            "Siz <span>yaxshilik ulashishdan</span> hech qachon charchamaysiz.",
+            "Sizning <span>kiyinish va muomala uslubingiz</span> o'zgacha.",
+            "Siz murakkab muammolarga <span>noodatiy yechim</span> topasiz.",
+            "Siz o'z yaqinlaringizga <span>sadoqatli va vafo kilingan</span> insonsiz.",
+            "Sizning <span>samimiy kulgingiz</span> atrofni yoritadi.",
+            "Siz har qanday davraga <span>o'zgacha fayz</span> kiritasiz.",
+            "Siz <span>o'zingizga bo'lgan ishonchni</span> to'g'ri shakllantirgansiz.",
+            "Siz <span>insonlar qalb kalitini</span> topa olasiz.",
+            "Siz <span>tinchlik va totuvlik</span> tarafdorisiz.",
+            "Sizning <span>ruhingiz pok va ozoda</span>.",
+            "Siz har doim <span>eng o'rinli maslahatni</span> berasiz.",
+            "Sizning <span>kelajagingiz</span> behad porloqdir.",
+            "Siz <span>kattalarga hurmat, kichiklarga shafqat</span> ko'rsatasiz.",
+            "Siz yuzaga keltirgan <span>g'oyalar</span> har doim qiziqarli.",
+            "Siz kichik e'tibordan ham <span>minnatdor bo'lishni</span> bilasiz.",
+            "Siz <span>boshqalarga quvonch</span> va tabassum ulashasiz.",
+            "Sizda <span>soxtalikdan xoli</span> samimiylik mavjud.",
+            "SZning <span>saboqlaringiz</span> ko'plarga hayotiy yordam beradi.",
+            "Siz har qanday qiyinchilikni <span>iroda bilan</span> yenasiz.",
+            "Siz o'ta <span>bag'rikeng va kechirimli</span> insonsiz.",
+            "Siz <span>boshqalarni oldinga undaydigan</span> kuchsiz.",
+            "Sizning <span>hushingiz va fahm-farosatingiz</span> yuqori.",
+            "Siz har doim <span>ezgu tashabbuslar</span> muallifisiz.",
+            "Siz bilan vaqt o'tgani <span>umuman bilinmaydi</span>.",
+            "Siz <span>haqiqiy sinovli kun do'sti</span> bo'la olasiz.",
+            "Siz <span>kutilmagan beg'araz yaxshiliklar</span> qilasiz.",
+            "Sizning <span>nigohingizda</span> mehr va samimiyat bor.",
+            "Siz <span>hur va ozod</span> fikrlaydigan insonsiz.",
+            "Siz har bir inson zotida <span>qiziqish</span> uyg'otasiz.",
+            "Sizning <span>so'zlaringiz</span> ma'noli va ta'sirchan.",
+            "Siz har bir jamoada <span>ishonchli hamkor</span>siz.",
+            "Siz <span>o'zligingiz va qadringizni</span> yo'qotmaysiz.",
+            "Siz har qanday sharoitda ham <span>oldinga intilasiz</span>.",
+            "Siz <span>eng go'zal fazilatlar</span> sohibisiz.",
+            "Sizning <span>bu dunyoda borligingiz</span> o'zi katta baxt.",
+            "Siz <span>mehri daryo va qalbi daryo</span> insonsiz.",
+            "Siz <span>barcha yaqinlaringiz uchun</span> behad qadrlisiz.",
+            "Siz <span>har qanday zulmatni</span> nurga buraysiz.",
+            "Siz <span>atrof-muhitni yanada yaxshi</span> tomonga o'zgartirasiz.",
+            "Siz shunchaki <span>o'zingiz bo'lganingiz uchun</span> ham ajoyibsiz!"
+        ];
+
+        // Core App State
+        let currentPin = "";
+        const CORRECT_PIN = "2104";
+        let currentIndex = 0;
+        let isPaused = false;
+        let autoPlayTimer = null;
+        let clickTimeout = null;
+
+        // DOM Elements
+        const lockScreen = document.getElementById("lockScreen");
+        const pinBox = document.getElementById("pinBox");
+        const pinDots = document.getElementById("pinDots").children;
+        const errorMsg = document.getElementById("errorMsg");
+        const mainStage = document.getElementById("mainStage");
+        const bgTypography = document.getElementById("bgTypography");
+        const statementText = document.getElementById("statementText");
+        const counter = document.getElementById("counter");
+        const progressBar = document.getElementById("progressBar");
+        const pauseBadge = document.getElementById("pauseBadge");
+        const gestureZone = document.getElementById("gestureZone");
+
+        /* ---------------- PIN LOGIC ---------------- */
+        function appendPin(num) {
+            if (currentPin.length < 4) {
+                currentPin += num;
+                updatePinDots();
+                if (currentPin.length === 4) {
+                    setTimeout(verifyPin, 150);
+                }
+            }
+        }
+
+        function backspacePin() {
+            if (currentPin.length > 0) {
+                currentPin = currentPin.slice(0, -1);
+                updatePinDots();
+            }
+        }
+
+        function clearPin() {
+            currentPin = "";
+            updatePinDots();
+        }
+
+        function updatePinDots() {
+            errorMsg.style.opacity = '0';
+            for (let i = 0; i < 4; i++) {
+                if (i < currentPin.length) {
+                    pinDots[i].classList.add("bg-gold-400", "border-gold-400", "shadow-[0_0_10px_rgba(250,204,21,0.5)]");
+                    pinDots[i].classList.remove("bg-navy-900");
+                } else {
+                    pinDots[i].classList.remove("bg-gold-400", "border-gold-400", "shadow-[0_0_10px_rgba(250,204,21,0.5)]");
+                    pinDots[i].classList.add("bg-navy-900");
+                }
+            }
+        }
+
+        function verifyPin() {
+            if (currentPin === CORRECT_PIN) {
+                // Unlock Animation
+                lockScreen.classList.add("transition-all", "duration-700", "opacity-0", "pointer-events-none");
+                setTimeout(() => {
+                    lockScreen.classList.add("hidden");
+                    mainStage.classList.remove("hidden");
+                    bgTypography.classList.remove("hidden");
+                    setTimeout(() => {
+                        mainStage.classList.remove("opacity-0");
+                        startAnimationStage();
+                    }, 50);
+                }, 700);
+            } else {
+                // Error Shake
+                pinBox.classList.add("shake-err");
+                errorMsg.style.opacity = '1';
+                setTimeout(() => {
+                    pinBox.classList.remove("shake-err");
+                    clearPin();
+                }, 400);
+            }
+        }
+
+        // Keyboard Support for PIN Entry
+        window.addEventListener("keydown", (e) => {
+            if (!lockScreen.classList.contains("hidden")) {
+                if (e.key >= "0" && e.key <= "9") {
+                    appendPin(e.key);
+                } else if (e.key === "Backspace") {
+                    backspacePin();
+                } else if (e.key === "Escape") {
+                    clearPin();
+                }
+            }
+        });
+
+        /* ---------------- ANIMATION STAGE LOGIC ---------------- */
+        function renderStatement(index) {
+            // Exit animation
+            statementText.className = "statement-exit text-2xl sm:text-3xl md:text-4xl font-serif leading-relaxed text-center";
+
+            setTimeout(() => {
+                // Update Text Content
+                statementText.innerHTML = statements[index];
+                
+                // Highlight Spans using custom styling
+                const spans = statementText.querySelectorAll("span");
+                spans.forEach(s => {
+                    s.className = "gold-glow-text font-semibold italic";
+                });
+
+                // Update UI Counter & Progress
+                const displayIndex = String(index + 1).padStart(3, '0');
+                counter.innerText = `${displayIndex} / 100`;
+                progressBar.style.width = `${((index + 1) / statements.length) * 100}%`;
+
+                // Enter animation
+                statementText.className = "statement-enter text-2xl sm:text-3xl md:text-4xl font-serif leading-relaxed text-center";
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        statementText.className = "statement-active text-2xl sm:text-3xl md:text-4xl font-serif leading-relaxed text-center";
+                    });
+                });
+            }, 350);
+        }
+
+        function nextStatement() {
+            currentIndex = (currentIndex + 1) % statements.length;
+            renderStatement(currentIndex);
+        }
+
+        function resetTimer() {
+            if (autoPlayTimer) clearInterval(autoPlayTimer);
+            if (!isPaused) {
+                // Fast cinematic interval (~2.4 sec per statement)
+                autoPlayTimer = setInterval(nextStatement, 2400);
+            }
+        }
+
+        function togglePause() {
+            isPaused = !isPaused;
+            if (isPaused) {
+                clearInterval(autoPlayTimer);
+                pauseBadge.style.opacity = "1";
+            } else {
+                pauseBadge.style.opacity = "0";
+                nextStatement();
+                resetTimer();
+            }
+        }
+
+        function startAnimationStage() {
+            renderStatement(currentIndex);
+            resetTimer();
+        }
+
+        /* ---------------- GESTURE HANDLING (ONE-CLICK & TWO-CLICK) ---------------- */
+        // We use document and gestureZone touch/click handlers to process single & double taps reliably
+        let lastTapTime = 0;
+
+        gestureZone.addEventListener("click", (e) => {
+            const currentTime = new Date().getTime();
+            const tapLength = currentTime - lastTapTime;
+
+            if (tapLength < 300 && tapLength > 0) {
+                // DOUBLE CLICK / TAP DETECTED -> Advance Immediately
+                clearTimeout(clickTimeout);
+                clickTimeout = null;
+                if (isPaused) {
+                    isPaused = false;
+                    pauseBadge.style.opacity = "0";
+                }
+                nextStatement();
+                resetTimer();
+                e.preventDefault();
+            } else {
+                // SINGLE CLICK / TAP DETECTED -> Toggle Pause/Play
+                clickTimeout = setTimeout(() => {
+                    togglePause();
+                    clickTimeout = null;
+                }, 300);
+            }
+            lastTapTime = currentTime;
+        });
+
+        /* ---------------- AMBIENT PARTICLE CANVAS ---------------- */
+        const canvas = document.getElementById("particleCanvas");
+        const ctx = canvas.getContext("2d");
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedY = Math.random() * 0.3 + 0.1;
+                this.opacity = Math.random() * 0.5 + 0.2;
+            }
+            update() {
+                this.y -= this.speedY;
+                if (this.y < 0) {
+                    this.y = canvas.height;
+                    this.x = Math.random() * canvas.width;
+                }
+            }
+            draw() {
+                ctx.fillStyle = `rgba(250, 204, 21, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 50; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+    </script>
+</body>
+</html>
